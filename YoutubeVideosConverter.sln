@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoutubeVideosConverter.Presentation", "YoutubeVideosConverter.Presentation\YoutubeVideosConverter.Presentation.csproj", "{B92FD7CF-4265-40F8-84CE-1926E3C19640}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F7A71727-29DB-4CA7-9BAC-8E75D73CFA99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YoutubeVideosConverter.Application", "YoutubeVideosConverter.Application\YoutubeVideosConverter.Application.csproj", "{CD2D00BC-E85E-449D-A93D-36772F516C1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoutubeVideosConverter.Presentation", "src\YoutubeVideosConverter.Presentation\YoutubeVideosConverter.Presentation.csproj", "{474AB3C9-2A1B-47D2-B614-86E9F31B1871}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YoutubeVideoConverter.Infrastructure.SQL", "YoutubeVideoConverter.Infrastructure.SQL\YoutubeVideoConverter.Infrastructure.SQL.csproj", "{4F54891B-D9E7-49E2-94D8-F0C51446ADB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoutubeVideosConverter.Application", "src\YoutubeVideosConverter.Application\YoutubeVideosConverter.Application.csproj", "{BE0EC950-BA18-4722-8AA8-81CFB53AA437}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoutubeVideoConverter.Infrastructure.SQL", "src\YoutubeVideoConverter.Infrastructure.SQL\YoutubeVideoConverter.Infrastructure.SQL.csproj", "{F57A7544-1055-4EEA-9CCC-A6308395F98A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,21 +17,26 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B92FD7CF-4265-40F8-84CE-1926E3C19640}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B92FD7CF-4265-40F8-84CE-1926E3C19640}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B92FD7CF-4265-40F8-84CE-1926E3C19640}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B92FD7CF-4265-40F8-84CE-1926E3C19640}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CD2D00BC-E85E-449D-A93D-36772F516C1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CD2D00BC-E85E-449D-A93D-36772F516C1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CD2D00BC-E85E-449D-A93D-36772F516C1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CD2D00BC-E85E-449D-A93D-36772F516C1F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4F54891B-D9E7-49E2-94D8-F0C51446ADB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4F54891B-D9E7-49E2-94D8-F0C51446ADB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4F54891B-D9E7-49E2-94D8-F0C51446ADB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4F54891B-D9E7-49E2-94D8-F0C51446ADB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{474AB3C9-2A1B-47D2-B614-86E9F31B1871}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{474AB3C9-2A1B-47D2-B614-86E9F31B1871}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{474AB3C9-2A1B-47D2-B614-86E9F31B1871}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{474AB3C9-2A1B-47D2-B614-86E9F31B1871}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE0EC950-BA18-4722-8AA8-81CFB53AA437}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE0EC950-BA18-4722-8AA8-81CFB53AA437}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE0EC950-BA18-4722-8AA8-81CFB53AA437}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE0EC950-BA18-4722-8AA8-81CFB53AA437}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F57A7544-1055-4EEA-9CCC-A6308395F98A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F57A7544-1055-4EEA-9CCC-A6308395F98A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F57A7544-1055-4EEA-9CCC-A6308395F98A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F57A7544-1055-4EEA-9CCC-A6308395F98A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{474AB3C9-2A1B-47D2-B614-86E9F31B1871} = {F7A71727-29DB-4CA7-9BAC-8E75D73CFA99}
+		{BE0EC950-BA18-4722-8AA8-81CFB53AA437} = {F7A71727-29DB-4CA7-9BAC-8E75D73CFA99}
+		{F57A7544-1055-4EEA-9CCC-A6308395F98A} = {F7A71727-29DB-4CA7-9BAC-8E75D73CFA99}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6D491E77-B9A4-46AB-894A-AAA3DEF84CF9}
