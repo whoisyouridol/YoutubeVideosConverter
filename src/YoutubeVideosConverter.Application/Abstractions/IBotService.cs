@@ -1,8 +1,7 @@
 ﻿
-namespace YoutubeVideosConverter.Application.Abstractions
+namespace YoutubeVideosConverter.Application.Abstractions;
+
+public interface IBotService
 {
-    public interface IBotService
-    {
-        Task StartBotAsync();
-    }
+    Task StartBotAsync();
 }

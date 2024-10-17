@@ -1,6 +1,3 @@
-﻿using System;
+﻿namespace YoutubeVideosConverter.Application.Models.Response;
 
-namespace YoutubeVideosConverter.Application.Models.Response
-{
-    public record AudioResponseModel(CustomFileStream Stream,string AudioName,string AudioAuthor);
-}
+public record AudioResponseModel(CustomFileStream Stream,string AudioName,string AudioAuthor);

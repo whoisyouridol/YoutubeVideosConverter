@@ -1,12 +1,9 @@
-﻿using System;
-using YoutubeVideosConverter.Application.Models;
-using YoutubeVideosConverter.Application.Models.Generic;
+﻿using YoutubeVideosConverter.Application.Models.Generic;
 using YoutubeVideosConverter.Application.Models.Response;
 
-namespace YoutubeVideosConverter.Application.Abstractions
+namespace YoutubeVideosConverter.Application.Abstractions;
+
+public interface IConverterService
 {
-    public interface IConverterService
-    {
-        Task<ExecutionResult<AudioResponseModel>> ConvertToMp3Async(string url);
-    }
+    Task<ExecutionResult<AudioResponseModel>> ConvertToMp3Async(string url);
 }
