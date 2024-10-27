@@ -3,6 +3,14 @@ using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types;
 using Telegram.Bot;
 using YoutubeVideosConverter.Application.Abstractions;
+using YoutubeVideoConverter.Infrastructure.SQL.Abstractions.UOW;
+using YoutubeVideoConverter.Infrastructure.SQL.Models;
+using AngleSharp.Dom;
+using YoutubeVideoConverter.Infrastructure.SQL.Enums;
+using System.Diagnostics;
+using YoutubeExplode;
+using System.Text.RegularExpressions;
+using Microsoft.Extensions.Configuration;
 
 namespace YoutubeVideosConverter.Application.Implementations;
 
@@ -10,11 +18,15 @@ public class BotService : IBotService
 {
     private readonly ITelegramBotClient _botClient;
     private readonly IConverterService _converterService;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IConfiguration _config;
 
-    public BotService(ITelegramBotClient botClient, IConverterService greetingService)
+    public BotService(ITelegramBotClient botClient, IConverterService greetingService, IUnitOfWork unitOfWork, IConfiguration config)
     {
         _botClient = botClient;
         _converterService = greetingService;
+        _unitOfWork = unitOfWork;
+        _config = config;
     }
 
     public async Task StartBotAsync()
@@ -37,9 +49,14 @@ public class BotService : IBotService
     {
         if (update.Type == UpdateType.Message && update.Message?.Text != null)
         {
-            Console.WriteLine($"Request from {update.Message.From.Username} came!Message - {update.Message.Text}.  Starting working with it. Current time - {DateTime.Now}");
+            var userReqResp = new UserRequestResponse
+            {
+                Username = update.Message.From.Username,
+                Message = update.Message.Text,
+                RequestDate = DateTime.Now,
+            };
+            _unitOfWork.GetRepository<UserRequestResponse>().AddAsync(userReqResp);
             var message = update.Message;
-
             switch (message.Text)
             {
                 case "/start":
@@ -49,27 +66,66 @@ public class BotService : IBotService
                     " რომ ტელეგრამის შეზღუდვის თანახმად," +
                     " *შეგიძლია გადმოწერო მაქსიმუმ 50 მეგაბაიტის მქონე აუდიო (რაც დაახლოვებით 140 წუთის ტოლია)* "
                     , parseMode: ParseMode.Markdown);
+                    await _unitOfWork.SaveChangesAsync();
                     return;
                 default:
+                    if (HasValidPattern(update.Message.Text))
+                    {
+                        var _convertLog = new ConvertLog
+                        {
+                            Url = update.Message.Text,
+                            ConversionDestination = Destination.AudioFile,
+                            ConvertTo = ConvertType.ToMp3,
+                        };
+                        await client.SendTextMessageAsync(update.Message.Chat.Id, "დავიწყეთ შენთვის mp3-ის გამზადება 🔥", cancellationToken: token);
+
+                        //this one is temporary, then I will add user`s choices context, will save in db his last preferences
+                        //(for example take his selected destination from db and use needed switch case),
+                        //and return him response according his choice.
+                        var destination = "mp3";
+                        switch (destination)
+                        {
+                            case "mp3":
+                                _convertLog.ConvertTo = ConvertType.ToMp3;
+
+                                var _sw = Stopwatch.StartNew();
+
+                                var _result = await _converterService.ConvertToMp3Async(message.Text);
+
+                                _sw.Stop();
+
+                                _convertLog.ConversionTime = _sw.Elapsed;
+                                userReqResp.ConvertLogs.Add(_convertLog);
+                                _unitOfWork.GetRepository<UserRequestResponse>().AddAsync(userReqResp);
+                                if (_result.IsSucceeded)
+                                {
+                                    var data = _result.GetResponse();
+                                    _convertLog.ConvertedSuccessfully = true;
+                                    userReqResp.RequestSucceeded = true;
+                                    _convertLog.VideoName = data.AudioName;
+                                    var resultAudioStream = InputFile.FromStream(data.Stream);
+                                    await client.SendAudioAsync(update.Message.Chat.Id, resultAudioStream, performer: data.AudioAuthor, title: data.AudioName, cancellationToken: token);
+
+                                    await data.Stream.DisposeAsync();
+                                }
+                                else
+                                {
+                                    await client.SendTextMessageAsync(update.Message.Chat.Id, _result.ErrorMessage, cancellationToken: token);
+                                    userReqResp.RequestSucceeded = false;
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        await client.SendTextMessageAsync(update.Message.Chat.Id, "გაგზავნილი ლინკი არის არასწორ ფორმატში!");
+                    }
+                    await _unitOfWork.SaveChangesAsync();
+
                     break;
             }
-            await client.SendTextMessageAsync(update.Message.Chat.Id, "დავიწყეთ შენთვის mp3-ის გამზადება 🔥");
-            var result = await _converterService.ConvertToMp3Async(message.Text);
-
-            if (!result.IsSucceeded)
-            {
-                await client.SendTextMessageAsync(update.Message.Chat.Id, result.ErrorMessage);
-                return;
-            }
-
-            var data = result.GetResponse();
-
-            var resultAudioStream = InputFile.FromStream(data.Stream);
-            await client.SendAudioAsync(update.Message.Chat.Id, resultAudioStream, performer: data.AudioAuthor, title: data.AudioName, cancellationToken: token);
-
-            await data.Stream.DisposeAsync();
-            Console.WriteLine($"Request from {update.Message.From.Username} finished! Current time - {DateTime.Now}");
-
             return;
         }
     }
@@ -93,6 +149,19 @@ public class BotService : IBotService
         else
         {
             Console.WriteLine("No messages to clear.");
+        }
+    }
+    private bool HasValidPattern(string url)
+    {
+        try
+        {
+            string pattern = _config["YoutubeLinkValidationRegex"];
+            Regex regex = new(pattern);
+            return regex.IsMatch(url);
+        }
+        catch
+        {
+            return false;
         }
     }
 }
