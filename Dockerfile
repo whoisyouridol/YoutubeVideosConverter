@@ -30,7 +30,7 @@ RUN dotnet build "YoutubeVideosConverter.Presentation.csproj" -c $BUILD_CONFIGUR
 # Publish stage to prepare final output
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "YoutubeVideosConverter.Presentation.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "YoutubeVideosConverter.Presentation.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=true
 
 # Final stage for production
 FROM base AS final
