@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using YoutubeVideoConverter.Infrastructure.SQL.Abstractions;
+using YoutubeVideoConverter.Infrastructure.SQL.Models;
 using YoutubeVideoConverter.Infrastructure.SQL.Persistance;
 
 namespace YoutubeVideoConverter.Infrastructure.SQL.Implementations
@@ -22,6 +23,7 @@ namespace YoutubeVideoConverter.Infrastructure.SQL.Implementations
         public async Task<T> AddAsync(T entity)
         {
             var result = await _context.Set<T>().AddAsync(entity);
+
             return result.Entity;
         }
 

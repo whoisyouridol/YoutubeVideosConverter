@@ -33,7 +33,7 @@ internal class Program
     }
     private static void ConfigureServices(IServiceCollection services)
     {
-        var botToken = "telegram_api_key_here";
+        var botToken = "";
         services.AddSingleton<ITelegramBotClient>(provider => new TelegramBotClient(botToken));
 
         services.AddSqlServer<AppDbContext>(_configuration.GetConnectionString("DbConnection"));

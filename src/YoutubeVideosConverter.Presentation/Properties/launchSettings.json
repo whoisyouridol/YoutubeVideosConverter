@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "YoutubeVideosConverter.Presentation": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}

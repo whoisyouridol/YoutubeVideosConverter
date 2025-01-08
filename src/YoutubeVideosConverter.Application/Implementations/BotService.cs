@@ -21,10 +21,10 @@ public class BotService : IBotService
     private readonly IUnitOfWork _unitOfWork;
     private readonly IConfiguration _config;
 
-    public BotService(ITelegramBotClient botClient, IConverterService greetingService, IUnitOfWork unitOfWork, IConfiguration config)
+    public BotService(ITelegramBotClient botClient, IConverterService converterService, IUnitOfWork unitOfWork, IConfiguration config)
     {
         _botClient = botClient;
-        _converterService = greetingService;
+        _converterService = converterService;
         _unitOfWork = unitOfWork;
         _config = config;
     }

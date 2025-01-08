@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoutubeVideosConverter.Appl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoutubeVideoConverter.Infrastructure.SQL", "src\YoutubeVideoConverter.Infrastructure.SQL\YoutubeVideoConverter.Infrastructure.SQL.csproj", "{F57A7544-1055-4EEA-9CCC-A6308395F98A}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoutubeVideosConverter.Application.Tests", "YoutubeVideosConverter.Application.Tests\YoutubeVideosConverter.Application.Tests.csproj", "{8B58B893-C56C-47DC-976C-58247446D841}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{F57A7544-1055-4EEA-9CCC-A6308395F98A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F57A7544-1055-4EEA-9CCC-A6308395F98A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F57A7544-1055-4EEA-9CCC-A6308395F98A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B58B893-C56C-47DC-976C-58247446D841}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B58B893-C56C-47DC-976C-58247446D841}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B58B893-C56C-47DC-976C-58247446D841}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B58B893-C56C-47DC-976C-58247446D841}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -37,6 +43,7 @@ Global
 		{474AB3C9-2A1B-47D2-B614-86E9F31B1871} = {F7A71727-29DB-4CA7-9BAC-8E75D73CFA99}
 		{BE0EC950-BA18-4722-8AA8-81CFB53AA437} = {F7A71727-29DB-4CA7-9BAC-8E75D73CFA99}
 		{F57A7544-1055-4EEA-9CCC-A6308395F98A} = {F7A71727-29DB-4CA7-9BAC-8E75D73CFA99}
+		{8B58B893-C56C-47DC-976C-58247446D841} = {F7A71727-29DB-4CA7-9BAC-8E75D73CFA99}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6D491E77-B9A4-46AB-894A-AAA3DEF84CF9}
