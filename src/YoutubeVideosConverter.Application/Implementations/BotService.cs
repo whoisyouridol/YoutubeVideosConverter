@@ -55,7 +55,7 @@ public class BotService : IBotService
                 Message = update.Message.Text,
                 RequestDate = DateTime.Now,
             };
-            _unitOfWork.GetRepository<UserRequestResponse>().AddAsync(userReqResp);
+            await _unitOfWork.GetRepository<UserRequestResponse>().AddAsync(userReqResp);
             var message = update.Message;
             switch (message.Text)
             {
@@ -96,7 +96,7 @@ public class BotService : IBotService
 
                                 _convertLog.ConversionTime = _sw.Elapsed;
                                 userReqResp.ConvertLogs.Add(_convertLog);
-                                _unitOfWork.GetRepository<UserRequestResponse>().AddAsync(userReqResp);
+                                await _unitOfWork.GetRepository<UserRequestResponse>().AddAsync(userReqResp);
                                 if (_result.IsSucceeded)
                                 {
                                     var data = _result.GetResponse();
